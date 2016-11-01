@@ -7,6 +7,30 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+
+var upload = multer({ storage: storage }).single('upload-pic')
+
+app.post('/upload', function(request, response) {
+  upload(request, response, function(err) {
+  if(err) {
+    console.log('Error Occured');
+    return;
+  }
+  console.log(request.file);
+  response.end('Your File Uploaded');
+  console.log('Photo Uploaded');
+  })
+});
+
+
 
 
 const hostname = process.env.HOST || "localhost"

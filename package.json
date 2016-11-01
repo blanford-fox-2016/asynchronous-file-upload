@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/blanford-fox-2016/asynchronous-file-upload#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "multer": "^1.2.0"
