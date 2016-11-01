@@ -3,9 +3,7 @@ const multer = require('multer')
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
-
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
+const morgan = require('morgan')
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -17,6 +15,10 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage }).single('upload-pic')
+
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+app.use(morgan('dev'))
 
 app.post('/upload', function(request, response) {
   upload(request, response, function(err) {
