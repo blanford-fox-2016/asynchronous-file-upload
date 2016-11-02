@@ -7,31 +7,37 @@ const morgan = require('morgan')
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/public/uploads')
+    cb(null, 'public/uploads')
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now())
+    cb(null, Date.now()) + '-' + file.originalname
   }
 })
 
-var upload = multer({ storage: storage }).single('upload-pic')
+var upload = multer({ storage: storage }).single('photo')
 
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
 app.use(morgan('dev'))
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+app.use(cors())
 
-app.post('/upload', function(request, response) {
-  upload(request, response, function(err) {
-  if(err) {
-    console.log('Error Occured');
-    return;
-  }
-  console.log(request.file);
-  response.end('Your File Uploaded');
-  console.log('Photo Uploaded');
+
+app.get('/', (req, res) => {
+  res.sendFile(`${__dirname}/client/index.html`)
+})
+
+app.post('/api/upload', (req, res) => {
+  upload(req, res, (err) => {
+    if(err) {
+      console.log('Error Occured');
+      return;
+    }
+    console.log(req.files);
+    res.end('Your File Uploaded');
+    console.log('Photo Uploaded');
   })
+  console.log(`test`);
 });
-
 
 
 

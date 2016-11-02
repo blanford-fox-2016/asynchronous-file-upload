@@ -15,12 +15,13 @@
 
 <body>
   <div class="container">
-    <form enctype="multipart/form-data" action="/upload" method="post" class="form-horizontal">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal">
       <div class="form-group">
-        <input type="file" name="photo" class="form-control"/>
+        <input type="file" name="photo" id="photo" class="form-control"/>
       </div>
+      <p id="error_msg"></p>
       <div class="form-group">
-        <input type="submit" value="Upload Image" name="submit" class="form-control"/>
+        <input type="submit" value="Upload Image" name="submit" id="submit" class="form-control"/>
       </div>
     </form>
   </div>
@@ -30,7 +31,28 @@
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
-  <script src="/scripts.js"></script>
+  <script>
+    $('#submit').on('click', (e) => {
+      e.preventDefault()
+      console.log($('#photo').val());
+
+      if($('#photo').val() === ''){
+        $("#error_msg").html("Please choose your file");
+      }else{
+        $.ajax({
+          url         : 'http://localhost:3000/api/upload',
+          type        : 'POST',
+          dataType    : 'json',
+          contentType : 'application/x-www-form-urlencoded',
+          // data        : $('#photo').val(),
+          success     : (data) => {
+            console.log(data);
+          }
+        })
+      }
+    })
+
+  </script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
