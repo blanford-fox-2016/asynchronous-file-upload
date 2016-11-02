@@ -1,4 +1,5 @@
 var express = require('express');
+var upload = require('jquery-file-upload-middleware');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -29,6 +30,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/api', api)
+
+
+
+upload.configure({
+  uploadDir: __dirname + '/public/uploads',
+  uploadUrl: '/uploads',
+  imageVersions: {
+    thumbnail: {
+      width: 80,
+      height: 80
+    }
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
