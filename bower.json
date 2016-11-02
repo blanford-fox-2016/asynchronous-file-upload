@@ -1,0 +1,22 @@
+{
+  "name": "asynchronous-file-upload",
+  "homepage": "https://github.com/blanford-fox-2016/asynchronous-file-upload",
+  "authors": [
+    "Ahyana Rizky Pratama <ahyana.rizky@gmail.com>"
+  ],
+  "description": "exercise upload file",
+  "main": "index.html",
+  "keywords": [
+    "file",
+    "upload"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
