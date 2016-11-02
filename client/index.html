@@ -15,9 +15,9 @@
 
 <body>
   <div class="container">
-    <form enctype="multipart/form-data" method="post" class="form-horizontal">
+    <form enctype="multipart/form-data" action="/upload" method="post" class="form-horizontal">
       <div class="form-group">
-        <input type="file" name="photo" id="photo" class="form-control"/>
+        <input type="file" name="sampleFile" id="photo" class="form-control"/>
       </div>
       <p id="error_msg"></p>
       <div class="form-group">
@@ -25,32 +25,47 @@
       </div>
     </form>
   </div>
+  <div id="show">
 
+  </div>
+
+  <img/>
   <!-- script js -->
-  <script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
   <script>
-    $('#submit').on('click', (e) => {
-      e.preventDefault()
-      console.log($('#photo').val());
 
-      if($('#photo').val() === ''){
-        $("#error_msg").html("Please choose your file");
-      }else{
-        $.ajax({
-          url         : 'http://localhost:3000/api/upload',
-          type        : 'POST',
-          dataType    : 'json',
-          contentType : 'application/x-www-form-urlencoded',
-          // data        : $('#photo').val(),
-          success     : (data) => {
-            console.log(data);
-          }
-        })
-      }
-    })
+  var reader = new FileReader()
+  $('#photo').change(function(){
+    console.log($("photo"))
+    reader.readAsDataURL($('#photo')[0].files[0])
+    reader.onloaded = function (e){
+      $("img").attr('src', reader.result)
+    }
+  })
+    // $('#submit').on('click', (e) => {
+    //   e.preventDefault()
+    //   console.log($('#photo').val());
+    //
+    //   if($('#photo').val() === ''){
+    //     $("#error_msg").html("Please choose your file");
+    //   }else{
+    //     console.log($('#photo').val())
+    //     $.ajax({
+    //       url         : 'http://localhost:3000/upload',
+    //       type        : 'POST',
+    //       dataType    : 'json',
+    //       contentType : 'application/x-www-form-urlencoded',
+    //       data        :
+    //         $('#photo').val()
+    //       ,
+    //       success     : (data) => {
+    //         console.log(data);
+    //       }
+    //     })
+    //   }
+    // })
 
   </script>
   <!-- Latest compiled and minified JavaScript -->
