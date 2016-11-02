@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>File upload Node.</title>
+</head>
+
+<body>
+    <form id="uploadForm" enctype="multipart/form-data" action="/api/photo" method="post">
+        <input type="file" name="userPhoto" />
+        <input type="submit" value="Upload Image" name="submit">
+        <span id="status"></span>
+        <img id="preview" src="" alt="">
+    </form>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#uploadForm').submit(function() {
+            $("#status").empty().text("File is uploading...");
+            $(this).ajaxSubmit({
+
+                error: function(res) {
+                    status('Error: ' + res.status);
+                },
+
+                success: function(res) {
+                    $("#status").empty().text(res);
+                    console.log(res);
+                    $('#preview').attr('src', `uploads/${res}`)
+                }
+            });
+            //Very important line, it disable the page refresh.
+            return false;
+        });
+    });
+</script>
+
+</html>
