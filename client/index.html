@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Image Uploader</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+  <div class="container">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal">
+      <div class="form-group">
+        <input type="file" name="sampleFile" id="photo" class="form-control"/>
+      </div>
+      <p id="error_msg"></p>
+      <div class="form-group">
+        <input type="submit" value="Upload Image" name="submit" id="submit" class="form-control"/>
+      </div>
+    </form>
+  </div>
+  <div id="show">
+
+  </div>
+
+  <img/>
+  <!-- script js -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script>
+
+  // var reader = new FileReader()
+  // $('#photo').change(function(){
+  //   console.log($("photo"))
+  //   reader.readAsDataURL($('#photo')[0].files[0])
+  //   reader.onloaded = function (e){
+  //     $("img").attr('src', reader.result)
+  //   }
+  // })
+    /* ajax */
+    $('#submit').on('click', (e) => {
+      e.preventDefault()
+      console.log($('#photo').val());
+
+      if($('#photo').val() === ''){
+        $("#error_msg").html("Please choose your file");
+      }else{
+        // $.ajax({
+        //   url         : 'http://localhost:3000/api/upload',
+        //   type        : 'POST',
+        //   // dataType    : false,
+        //   contentType : 'application/x-www-form-urlencoded',
+        //   // data        :
+        //   //   $('#photo').val()
+        //   // ,
+        //   success     : (data) => {
+        //     console.log(data);
+        //   },
+        //   error       : (err) => {
+        //     console.log(`${err}`)
+        //   }
+        // })
+      }
+    })
+
+  </script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
