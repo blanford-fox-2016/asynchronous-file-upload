@@ -6,21 +6,25 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="./src/stylesheets/semantic.min.css">
   <link rel="stylesheet" href="./src/stylesheets/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="./src/javascripts/uploadify/uploadify.css" />
   <title>Document</title>
 </head>
 <body>
-  <div class="ui container">
-  <h1 id='header file upload' class='ui green header'>File Upload</h1>
+  <div id='main-container'class="ui container">
+  <h1 id='header-file-upload' class='ui green header'>File Upload</h1>
   <div class="ui info message">
     <p class="description" id="desc">Upload a file</p>
-    <button id='btn-upload' class="ui inverted green button">
+    <input type="file" name="file_upload" id="file_upload" />
+
+    <!-- <button id='btn-upload' class="ui inverted green button">
       Select File..
-    </button>
+    </button> -->
   </div>
   </div>
 
 </body>
 <script src="./src/javascripts/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="./src/javascripts/uploadify/jquery.uploadify.min.js" charset="utf-8"></script>
 <script src="./src/javascripts/semantic.min.js" charset="utf-8"></script>
 <script src="./src/javascripts/index.js" charset="utf-8"></script>
 </html>
