@@ -15,11 +15,16 @@ const upload = multer({ storage: storage }).single('gambar')
 
 
 router.post('/photos/upload', function (req, res) {
+    // console.log(req.file)
     upload(req, res, function (err) {
-        if (err) return res.end('Error uploading file!', err)
+        if (err) {
+            return res.end('Error uploading file!', err)
+        }
+        else if (req.file.filename) {
+            res.end(`${req.file.filename}`)
+        }
         else {
-            console.log(`${req.file}`)
-            res.end(`${req.file}`)
+            res.end('Error no file!', err)
         }
 
     })
