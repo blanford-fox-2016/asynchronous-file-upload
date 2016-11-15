@@ -15,9 +15,9 @@
 
 <body>
   <div class="container">
-    <form enctype="multipart/form-data" method="post" class="form-horizontal">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" action="http://localhost:3000/photos/upload" id="form_file">
       <div class="form-group">
-        <input type="file" name="sampleFile" id="photo" class="form-control"/>
+        <input type="file" name="photo" id="photo" class="form-control"/>
       </div>
       <p id="error_msg"></p>
       <div class="form-group">
@@ -26,7 +26,7 @@
     </form>
   </div>
   <div id="show">
-
+    <a href=""><img src="" alt="" style=""></a>
   </div>
 
   <img/>
@@ -34,40 +34,20 @@
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
   <script>
-
-  // var reader = new FileReader()
-  // $('#photo').change(function(){
-  //   console.log($("photo"))
-  //   reader.readAsDataURL($('#photo')[0].files[0])
-  //   reader.onloaded = function (e){
-  //     $("img").attr('src', reader.result)
-  //   }
-  // })
-    /* ajax */
-    $('#submit').on('click', (e) => {
+    $('#submit').on('click', function(e){
+      $('#form_file').ajaxSubmit({
+        error : function(res){
+          console.log(`Error: ${res.status}`)
+        },
+        success : function(res){
+          $("#show a").attr("href", `http://localhost:3000/photos/${res}`)
+          $("#show img").attr("src", `http://localhost:3000/photos/${res}`).attr("alt", "file uploaded").css("width", "250px")
+        }
+      })
       e.preventDefault()
-      console.log($('#photo').val());
-
-      if($('#photo').val() === ''){
-        $("#error_msg").html("Please choose your file");
-      }else{
-        // $.ajax({
-        //   url         : 'http://localhost:3000/api/upload',
-        //   type        : 'POST',
-        //   // dataType    : false,
-        //   contentType : 'application/x-www-form-urlencoded',
-        //   // data        :
-        //   //   $('#photo').val()
-        //   // ,
-        //   success     : (data) => {
-        //     console.log(data);
-        //   },
-        //   error       : (err) => {
-        //     console.log(`${err}`)
-        //   }
-        // })
-      }
     })
 
   </script>

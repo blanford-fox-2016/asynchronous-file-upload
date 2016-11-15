@@ -5,74 +5,47 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const path = require('path')
-// var fileUpload = require('express-fileupload');
-
-/* tambahan */
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    console.log(`test`);
-    cb(null, __dirname + '/public/uploads')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now()) + '-' + file.originalname
-  }
-})
-
-app.use(express.static(path.join(__dirname, 'public')))
-// app.use(fileUpload())
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/file_upload')
 
 app.use(morgan('dev'))
-app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(cors())
+app.use(express.static(path.join(__dirname, 'public')))
 
-/* upload */
-// app.post('/upload', function(req, res) {
-//     var sampleFile;
-//
-//     if (!req.files) {
-//         res.send('No files were uploaded.');
-//         return;
-//     }
-//
-//     sampleFile = req.files.sampleFile;
-//     console.log(sampleFile);
-//     sampleFile.mv(path.join(__dirname, './public/' + sampleFile.name), function(err) {
-//       console.log("masuk pindahan");
-//         if (err) {
-//             res.status(500).send(err);
-//         }
-//         else {
-//             res.send('File uploaded!');
-//         }
-//     });
-// });
 
-var upload = multer({ storage: storage }).single('photo')
-// var upload = multer({dest: 'public/uploads/'})
-
-/* test upload */
-// app.post('/', upload.any() ,(req, res) => {
-//   console.log(req.files);
-//   res.send(req.files)
-// })
 
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/client/index.html`)
 })
 
-app.post('/api/upload', (req, res) => {
-  upload(req, res, (err) => {
-    if(err) {
-      console.log('Error Occured');
-      return;
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, `public/photos`)
+    },
+    filename: function (req, file, callback) {
+        callback(null, `${Date.now()}-${file.originalname}`)
     }
-    console.log(req.files);
-    res.end('Your File Uploaded');
-    console.log('Photo Uploaded');
-  })
-});
+})
+const upload = multer({ storage: storage }).single('photo')
+
+
+app.post('/photos/upload', function (req, res) {
+    upload(req, res, function (err) {
+        if (err) {
+            return res.end('Error uploading file!', err)
+        }
+        else if (req.file.filename) {
+            res.end(`${req.file.filename}`)
+        }
+        else {
+            res.end('Error no file!', err)
+        }
+
+    })
+})
+
 
 const hostname = process.env.HOST || "localhost"
 const port = process.env.PORT || "3000"
